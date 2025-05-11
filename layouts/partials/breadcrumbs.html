@@ -1,0 +1,75 @@
+{{- if .Params.ShowBreadCrumbs | default .Site.Params.ShowBreadCrumbs }}
+<div class="breadcrumbs">
+    <!-- Generate breadcrumb segments based on URL path -->
+    {{- $url := replace .RelPermalink "//" "/" -}}
+    {{- $url = strings.TrimPrefix "/" $url -}}
+    {{- $url = strings.TrimSuffix "/" $url -}}
+    {{- $urlParts := split $url "/" -}}
+    
+    {{- $totalParts := (len $urlParts) -}}
+    
+    {{- $currentPath := "" -}}
+    
+    {{- range $index, $part := $urlParts -}}
+        {{- if ne $part "" -}}
+            <!-- Build the current path -->
+            {{- $currentPath = printf "%s/%s" $currentPath $part -}}
+            
+            <!-- Try to get the page at this path -->
+            {{- $pageAtPath := $.Site.GetPage $currentPath -}}
+            
+            <!-- Prepare title - first try to get from page, then format URL segment -->
+            {{- $title := "" -}}
+            
+            {{- if $pageAtPath -}}
+                <!-- Use page title if available -->
+                {{- $title = $pageAtPath.Title -}}
+            {{- else -}}
+                <!-- Fall back to formatting the URL segment -->
+                <!-- Remove leading numbers (like 00-, 01-, etc.) -->
+                {{- $title = $part | replaceRE "^[0-9]+-" "" -}}
+                
+                <!-- Replace hyphens with spaces -->
+                {{- $title = $title | replaceRE "-" " " -}}
+                
+                <!-- Special case handling for abbreviations like DAO -->
+                {{- $title = replace $title "dao" "DAO" -}}
+                {{- $title = replace $title "Dao" "DAO" -}}
+                
+                <!-- Handle special cases like "howtoDAO" -->
+                {{- $title = replace $title "howtoDAO" "HowToDAO" -}}
+                
+                <!-- Capitalize each word -->
+                {{- $words := split $title " " -}}
+                {{- $capitalizedWords := slice -}}
+                
+                {{- range $word := $words -}}
+                    <!-- Skip capitalizing if it's already an abbreviation like "DAO" -->
+                    {{- if eq $word "DAO" -}}
+                        {{- $capitalizedWords = $capitalizedWords | append $word -}}
+                    {{- else -}}
+                        {{- $firstChar := substr $word 0 1 | upper -}}
+                        {{- $restOfWord := substr $word 1 -}}
+                        {{- $capitalizedWord := printf "%s%s" $firstChar $restOfWord -}}
+                        {{- $capitalizedWords = $capitalizedWords | append $capitalizedWord -}}
+                    {{- end -}}
+                {{- end -}}
+                
+                {{- $title = delimit $capitalizedWords " " -}}
+            {{- end -}}
+            
+            <!-- Only add separator if this is not the first item -->
+            {{- if ne $index 0 -}}
+                »
+            {{- end -}}
+            
+            <!-- Don't make the last part a link, since we're already there -->
+            {{- if eq (add $index 1) $totalParts -}}
+                <span class="breadcrumb-last">{{ $title }}</span>
+            {{- else -}}
+                <a href="{{ $currentPath | absLangURL }}">{{ $title }}</a>
+            {{- end -}}
+        {{- end -}}
+    {{- end -}}
+</div>
+{{- end }}

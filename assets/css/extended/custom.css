@@ -1,0 +1,94 @@
+/* Breadcrumbs */
+.breadcrumbs {
+    color: var(--secondary);
+    font-size: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.breadcrumbs a {
+    font-size: 20px;
+    color: gold;
+    margin: 0 3px;
+}
+
+.breadcrumbs a:hover {
+    text-decoration: underline;
+}
+
+.breadcrumbs-last {
+    font-weight: 500;
+}
+
+
+/* Hover effect for main buttons (HowToDAO, Lokapal, Conciliatorics) */
+button:hover {
+    background-color: #ffffff10; /* Light transparency for soft effect */
+    transition: background-color 0.3s ease-in-out;
+}
+
+/* Hover effect for social media icons */
+a:hover {
+    opacity: 0.8; /* Makes the icons slightly transparent */
+    transition: opacity 0.3s ease-in-out;
+}
+
+.post-entry:hover {
+    background-color: #ffffff09; /* Light transparency for soft effect */
+    transition: background-color 0.3s ease-in-out;
+}
+
+
+/* Fade-in */
+@keyframes fadeIn {
+    from { opacity: 0.5; }
+    to { opacity: 1; }
+}
+
+/* first */
+.nav {
+    opacity: 0.5;
+    animation: fadeIn 0.2s ease-in forwards;
+}
+
+/* second */
+.profile,
+.profile_inner img,
+.page-header,
+.breadcrumbs {
+    opacity: 0.5;
+    animation: fadeIn 0.3s ease-in forwards;
+}
+
+/* third */
+.social-icons,
+.post-entry,
+.post-description,
+.not-found,
+.post-title,
+.post-meta {
+    opacity: 0.5;
+    animation: fadeIn 0.4s ease-in forwards;
+}
+
+/* fourth */
+.post-content,
+.profile_inner .buttons,
+.footer,
+.share-buttons {
+    opacity: 0.5;
+    animation: fadeIn 0.5s ease-in forwards;
+}
+
+/* Watermark */
+.post-content,
+.post-entry,
+.not-found {
+    background-image: url('../../img/watermark.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
