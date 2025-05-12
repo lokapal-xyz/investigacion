@@ -30,7 +30,7 @@ params:
     - name: "x"
       url: "https://x.com/lokapalxyz"
     - name: "substack"
-      url: "https://substack.com/@lokapal"
+      url: "https://lokapal2.substack.com/"
     - name: "github"
       url: "https://github.com/lokapal-xyz"
     - name: "telegram"
